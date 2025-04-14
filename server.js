@@ -1,8 +1,12 @@
 const express = require("express");
 const app = express();
-const PORT = 3000;
+const factsRoutes = require("./routes/facts");
+const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
-app.listen(PORT, () => console.log(`it's alive on http://localhost:${PORT}`));
+app.use("/api/facts", factsRoutes);
 
-app.get
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
+
