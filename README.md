@@ -30,7 +30,6 @@ A simple RESTful API built with Node.js and Express.js for posting and retrievin
 git clone https://github.com/your-username/snapple-facts-api.git
 cd snapple-facts-api
 ```
-````
 
 ### 2. Install dependencies
 
@@ -45,8 +44,6 @@ node server.js
 ```
 
 > Server will run at `http://localhost:3000`
-
----
 
 ## API Endpoints
 
