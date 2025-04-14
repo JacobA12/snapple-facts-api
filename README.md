@@ -11,7 +11,6 @@ Looking to follow a similar functionality to this site https://www.snapple.com/r
 - Get a single Snapple fact by ID
 - Add a new Snapple fact
 - Delete a Snapple fact by ID
-- (Optional) Update an existing fact
 
 ---
 
