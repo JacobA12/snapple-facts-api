@@ -38,6 +38,17 @@ exports.createFact = (req, res) => {
 
 exports.deleteFact = (req, res) => {
   const id = parseInt(req.params.id);
-  facts = facts.filter((f) => f.id !== id);
-  res.json({ message: "Fact deleted" });
+  const idx = facts.findIndex((f) => f.id === id);
+
+  if (idx === -1) {
+    return res.status(404).json({ message: "Fact not found." });
+  }
+
+  facts.splice(idx, 1);
+  fs.writeFile(dataPath, JSON.stringify(facts, null, 2), (err) => {
+    if (err) {
+      return res.status(500).json({ message: "Failed to delete fact." });
+    }
+    res.json({ message: "Fact deleted." });
+  });
 };
