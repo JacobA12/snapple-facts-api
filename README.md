@@ -1,4 +1,3 @@
-````markdown
 # Snapple Facts REST API
 
 A simple RESTful API built with Node.js and Express.js for posting and retrieving fun Snapple facts.
