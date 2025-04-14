@@ -1,6 +1,7 @@
 # Snapple Facts REST API
 
 A simple RESTful API built with Node.js and Express.js for posting and retrieving fun Snapple facts.
+Looking to follow a similar functionality to this site https://www.snapple.com/real-facts
 
 ---
 
