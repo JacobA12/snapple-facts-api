@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
+import FactCard from "./FactCard";
 
 function App() {
   const [allFacts, setAllFacts] = useState([]);
@@ -20,5 +21,16 @@ function App() {
 
     fetchFacts();
   }, []);
+
+  return (
+    <div>
+      <h1>All Snapple Facts</h1>
+      <ul>
+        {allFacts.map((fact) => (
+          <FactCard key={fact.id} id={fact.id} text={fact.text} />
+        ))}
+      </ul>
+    </div>
+  );
 }
 export default App;
