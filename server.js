@@ -2,8 +2,13 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 
+const cors = require('cors');
+
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+//To fix browser security rules
+app.use(cors());
 
 //client options provided by MongoDB
 const clientOptions = {
