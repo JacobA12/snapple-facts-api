@@ -136,3 +136,6 @@ dynamodb/
 
 # macOS specific files
 .DS_Store
+
+#password for admin account mongoDB compass
+databasePassword.txt
