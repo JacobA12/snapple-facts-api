@@ -26,3 +26,4 @@ mongoose
   });
 
 app.use(express.json());
+app.use("/api/facts", require("./routes/facts"));

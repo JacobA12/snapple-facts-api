@@ -1,54 +1,61 @@
-const fs = require("fs");
-const path = require("path");
-let facts = require("../data/facts.json");
+const Fact = require("../models/Fact"); // import your Mongoose model
 
-const dataPath = path.join(__dirname, "../data/facts.json");
-
-exports.getAllFacts = (req, res) => {
-  res.json(facts);
-};
-
-exports.getFactById = (req, res) => {
-  const id = parseInt(req.params.id);
-  const fact = facts.find((f) => f.id === id);
-  if (!fact) return res.status(404), json({ message: "Fact not found" });
-  res.json(fact);
-};
-
-exports.createFact = (req, res) => {
-  const { id, text } = req.body;
-
-  const existing = facts.find((f) => f.id === id);
-  if (existing) {
-    return res
-      .status(400)
-      .json({ message: "Fact with that ID already exists." });
+// GET all Snapple facts
+exports.getAllFacts = async (req, res) => {
+  try {
+    const facts = await Fact.find();
+    res.json(facts);
+  } catch (err) {
+    res.status(500).json({ message: "Server error", error: err.message });
   }
+};
 
-  const newFact = { id, text };
-  facts.push(newFact);
-
-  fs.writeFile(dataPath, JSON.stringify(facts, null, 2), (err) => {
-    if (err) {
-      return res.status(500).json({ message: "Failed to save fact." });
+// GET a specific Snapple fact by ID
+exports.getFactById = async (req, res) => {
+  try {
+    const fact = await Fact.findOne({ id: req.params.id });
+    if (!fact) {
+      return res.status(404).json({ message: "Fact not found" });
     }
+    res.json(fact);
+  } catch (err) {
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+};
+
+// POST a new Snapple fact
+exports.createFact = async (req, res) => {
+  try {
+    const { id, text } = req.body;
+
+    // Check if the fact already exists
+    const exists = await Fact.findOne({ id });
+    if (exists) {
+      return res
+        .status(400)
+        .json({ message: "Fact with this ID already exists" });
+    }
+
+    const newFact = new Fact({ id, text });
+    await newFact.save();
+
     res.status(201).json(newFact);
-  });
+  } catch (err) {
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
 };
 
-exports.deleteFact = (req, res) => {
-  const id = parseInt(req.params.id);
-  const idx = facts.findIndex((f) => f.id === id);
+// DELETE a Snapple fact by ID
+exports.deleteFact = async (req, res) => {
+  try {
+    const result = await Fact.deleteOne({ id: req.params.id });
 
-  if (idx === -1) {
-    return res.status(404).json({ message: "Fact not found." });
-  }
-
-  facts.splice(idx, 1);
-  fs.writeFile(dataPath, JSON.stringify(facts, null, 2), (err) => {
-    if (err) {
-      return res.status(500).json({ message: "Failed to delete fact." });
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ message: "Fact not found" });
     }
-    res.json({ message: "Fact deleted." });
-  });
+
+    res.json({ message: "Fact deleted" });
+  } catch (err) {
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
 };
