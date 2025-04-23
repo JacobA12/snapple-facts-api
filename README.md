@@ -11,6 +11,24 @@ Inspired by the format found at [Snapple Real Facts](https://www.snapple.com/rea
 - Retrieve a single fact by Snapple fact number (used as ID)
 - Add a new Snapple fact
 - Delete a Snapple fact by ID
+- Auto-collect facts from snapple.com using a custom Tampermonkey script
+
+---
+
+## Tampermonkey Fact Scraper (Created by Me)
+
+To speed up data collection, this project includes a Tampermonkey userscript that:
+
+- Automatically clicks the “Random Fact” button on Snapple’s website
+- Extracts the fact number and text
+- Sends the data to your running Snapple API in real time
+- Skips duplicates and stops after a set number of facts (default: 50)
+
+### Setup
+
+1. Install the [Tampermonkey extension](https://www.tampermonkey.net/) in your browser.
+2. Make sure your API is running at `http://localhost:3000/api/facts`
+3. Open [Snapple Real Facts](https://www.snapple.com/real-facts/random) and let the automation begin!
 
 ---
 
@@ -90,16 +108,9 @@ snapple-facts-api/
 │   └── Fact.js
 ├── routes/              # API endpoints
 │   └── facts.js
+├── scripts/              # Script to autocollect Snapple Facts
+│   └── snappleFactAutoCollector.js
 ├── server.js            # Entry point and server setup
 ├── .env                 # Environment variables
 └── README.md
 ```
-
----
-
-## Future Improvements
-
-- Add update/edit functionality (`PUT`)
-- Implement pagination and search
-- Add user authentication (admin-only POST/DELETE)
-- Build a frontend to consume the API
