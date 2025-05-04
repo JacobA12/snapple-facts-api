@@ -28,8 +28,9 @@ mongoose
   })
   .catch((err) => {
     console.error("mongoDB connection error:", err);
+    process.exit(1);
   });
 
 app.use(express.json());
-app.use("/api/auth", require("./routes/auth")); 
+app.use("/api/auth", require("./routes/auth"));
 app.use("/api/facts", require("./routes/facts"));
